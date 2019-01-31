@@ -137,7 +137,16 @@ select cid, score, @currank := @currank + 1 as rankid from
 select sc.cid, score,
 case when @frontscore = score then @currank
     when @frontscore := score then @currank := @currank + 1 end as rankid
-from (select @currank := 0, @frontrank := null) as t, sc order by score desc;
+from (select @currank := 0, @frontscore := null) as t, sc order by score desc;
+
+select 
+    score, 
+    convert(@i := @i + (@pre <> ( @pre := score)), signed) rankid,
+    (@ii := @ii + (@preii <> ( @preii := score))) as rankidddd
+from 
+    sc, 
+    (select @i := 0, @ii := 0, @pre := -1, @preii := -1) init 
+order by score desc;
 
 -- 16.  查询学生的总成绩，并进行排名，总分重复时保留名次空缺(比如1，2，3，4，5，6）
 select t1.*, @currank := @currank+1 as rankid from (
