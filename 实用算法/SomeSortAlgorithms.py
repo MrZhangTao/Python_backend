@@ -156,7 +156,7 @@ def quick_sort(arr, left, right):
             curLeft += 1
         arr[curRight] = arr[curLeft]
     arr[curLeft] = curVal
-    quick_sort(arr, 0, curLeft - 1)
+    quick_sort(arr, left, curLeft - 1)
     quick_sort(arr, curLeft + 1, right)
     return arr
 
